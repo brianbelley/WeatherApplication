@@ -42,6 +42,6 @@ The Weather App is a mobile application that provides users with current weather
 6. View search history and revisit previous searches.
 
 ## Screenshots
-![Homepage]([[[screenshots/homepage.png]([https://prnt.sc/t4jHXRZ8cYYW](https://prnt.sc/0nWEdbPXh9GQ))](https://prnt.sc/0nWEdbPXh9GQ)](https://prnt.sc/t4jHXRZ8cYYW))
+![Homepage]([[[[screenshots/homepage.png]([https://prnt.sc/t4jHXRZ8cYYW](https://prnt.sc/0nWEdbPXh9GQ))](https://prnt.sc/0nWEdbPXh9GQ)](https://prnt.sc/t4jHXRZ8cYYW)](https://i.ibb.co/N6pG6Q1/image.png))
 ![Favorites]([[screenshots/favorites.png](https://prnt.sc/qoI0Qwp10CRM)](https://prnt.sc/qoI0Qwp10CRM))
 ![History]([[screenshots/homepage.png]([https://prnt.sc/t4jHXRZ8cYYW](https://prnt.sc/0nWEdbPXh9GQ))](https://prnt.sc/0nWEdbPXh9GQ))
