@@ -23,6 +23,15 @@ namespace ProjectWeatherApp
             InitializeComponent();
         }
 
+        private void SetNavBarColor()
+        {
+            // Check if the navigation bar color can be set
+            if (Application.Current.MainPage is NavigationPage navigationPage)
+            {
+                navigationPage.BarBackgroundColor = Color.DodgerBlue;
+            }
+        }
+
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
             var email = EmailEntry.Text;
