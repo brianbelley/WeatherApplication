@@ -36,6 +36,13 @@ namespace ProjectWeatherApp
             FetchWeatherData("MONTREAL"); 
         }
 
+        public HomePage(string defaultCity)
+        {
+            InitializeComponent();
+            firebase = new FirebaseClient("https://xamarin-weatherapp-default-rtdb.firebaseio.com/");
+            FetchWeatherData(defaultCity);
+        }
+
         private async void OnSearchButtonPressed(object sender, EventArgs e)
         {
             var cityName = searchBar.Text;
@@ -74,6 +81,7 @@ namespace ProjectWeatherApp
             suggestionListView.IsVisible = suggestions.Any();
         }
 
+        //Still in maintenance
         private void OnSuggestionSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
@@ -88,6 +96,7 @@ namespace ProjectWeatherApp
             suggestionListView.IsVisible = false;
         }
 
+        //Still in maintenance
         public async Task<List<string>> GetAutocompleteSuggestions(string searchText)
         {
             try
@@ -176,28 +185,30 @@ namespace ProjectWeatherApp
                     var response = await client.GetStringAsync(string.Format(forecastUrl, latitude, longitude, api));
                     var forecastData = JsonConvert.DeserializeObject<ForecastData>(response);
 
-                    
+                    // Clear the existing forecast stack layout
                     stkForecast.Children.Clear();
 
-                   
-                    var groupedForecasts = forecastData.List.GroupBy(f => DateTimeOffset.FromUnixTimeSeconds(f.Dt).DateTime.Date);
+                    // Group the forecasts by date
+                    var groupedForecasts = forecastData.List
+                        .Where(f => DateTimeOffset.FromUnixTimeSeconds(f.Dt).Date > DateTime.Now.Date) // Exclude the current day
+                        .GroupBy(f => DateTimeOffset.FromUnixTimeSeconds(f.Dt).DateTime.Date);
 
                     foreach (var group in groupedForecasts)
                     {
                         var forecastView = new StackLayout();
 
-                   
-                        var firstForecast = group.First();
+                     
+                        var lblDay = new Label { Text = DateTimeOffset.FromUnixTimeSeconds(group.First().Dt).DateTime.ToString("ddd"), FontSize = 18 };
 
-                        var lblDay = new Label { Text = DateTimeOffset.FromUnixTimeSeconds(firstForecast.Dt).DateTime.ToString("ddd"), FontSize = 18 };
-
-                        double temperatureKelvin = firstForecast.Main.Temp;
+                     
+                        double temperatureKelvin = group.First().Main.Temp;
                         double temperatureCelcius = Math.Round(temperatureKelvin - 273.15);
-
                         var lblTemp = new Label { Text = $"{temperatureCelcius}°C", FontSize = 18 };
 
-                        var imgIcon = new Image { Source = ImageSource.FromUri(new Uri($"https://openweathermap.org/img/wn/{firstForecast.Weather[0].Icon}.png")), HeightRequest = 50, WidthRequest = 50 };
+         
+                        var imgIcon = new Image { Source = ImageSource.FromUri(new Uri($"https://openweathermap.org/img/wn/{group.First().Weather[0].Icon}.png")), HeightRequest = 50, WidthRequest = 50 };
 
+             
                         forecastView.Children.Add(lblDay);
                         forecastView.Children.Add(lblTemp);
                         forecastView.Children.Add(imgIcon);
@@ -211,6 +222,7 @@ namespace ProjectWeatherApp
                 await DisplayAlert("Error", ex.Message, "OK");
             }
         }
+
 
         private async void OnSaveButtonClicked(object sender, EventArgs e)
         {
@@ -277,5 +289,11 @@ namespace ProjectWeatherApp
                 Console.WriteLine($"Error pushing data to Firebase: {ex.Message}");
             }
         }
+
+        public void LoadCityInSearch(string cityName)
+        {
+            searchBar.Text = cityName;
+        }
+
     }
 }   

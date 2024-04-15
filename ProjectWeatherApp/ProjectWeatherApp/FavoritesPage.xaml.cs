@@ -71,7 +71,56 @@ namespace ProjectWeatherApp
             }
         }
 
+        private async void CitiesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+                return;
 
+            var cityName = e.SelectedItem as string;
+
+            var action = await DisplayActionSheet($"Selected city: {cityName}", "Cancel", null, "Load in Search", "Delete from Favorites");
+
+            if (action == "Load in Search")
+            {
+              
+                var newHomePage = new HomePage(cityName);
+                await Navigation.PushAsync(newHomePage);
+            }
+            else if (action == "Delete from Favorites")
+            {
+                try
+                {
+                    string currentUserUid = AuthenticationService.CurrentUserUid;
+
+                    if (!string.IsNullOrEmpty(currentUserUid))
+                    {
+                        var favoritesNode = firebaseClient.Child("users").Child(currentUserUid).Child("favorites");
+
+                        var citiesSnapshot = await favoritesNode.OnceSingleAsync<Dictionary<string, Dictionary<string, object>>>();
+                        var cityKey = citiesSnapshot.FirstOrDefault(pair => pair.Value["Name"].ToString() == cityName).Key;
+
+                        if (!string.IsNullOrEmpty(cityKey))
+                        {
+  
+                            await favoritesNode.Child(cityKey).DeleteAsync();
+
+
+                            LoadCities();
+                        }
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error", "User not logged in.", "OK");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Error", $"Failed to delete city: {ex.Message}", "OK");
+                }
+            }
+
+            citiesListView.SelectedItem = null;
+        }
 
     }
 }

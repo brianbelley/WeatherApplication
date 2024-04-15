@@ -4,65 +4,81 @@
              x:Class="ProjectWeatherApp.HomePage">
 
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Padding="20">
-                <!-- Search bar for finding other city's forecast -->
-                <SearchBar x:Name="searchBar" Placeholder="Enter city name" SearchButtonPressed="OnSearchButtonPressed" TextChanged="OnSearchBarTextChanged" />
-                <ListView x:Name="suggestionListView" IsVisible="False"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <Label Text="Current Weather" FontSize="Title" HorizontalOptions="Center" Margin="0,20,0,20" />
+            <!-- Search bar for finding other city's forecast -->
+            <SearchBar x:Name="searchBar" Placeholder="Enter city name" SearchButtonPressed="OnSearchButtonPressed" TextChanged="OnSearchBarTextChanged" />
+            <ListView x:Name="suggestionListView" IsVisible="False"/>
 
-                <!-- Current weather information -->
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="City: " FontSize="Subtitle" />
-                    <Label x:Name="lblCity" FontSize="Subtitle" />
+            <ScrollView Grid.Row="1">
+                <StackLayout Padding="20">
+
+                    <!-- Current weather information -->
+                    <Frame BackgroundColor="DodgerBlue" CornerRadius="10" Margin="0,0,0,20">
+                        <StackLayout Padding="20">
+                            <Label Text="Current Weather" FontSize="Title" HorizontalOptions="Center" Margin="0,20,0,20" />
+                            
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="City: " FontSize="Subtitle" />
+                                <Label x:Name="lblCity" FontSize="Subtitle" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="Temperature: " FontSize="Subtitle" />
+                                <Label x:Name="lblTemperature" FontSize="Subtitle" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="Humidity: " FontSize="Subtitle" />
+                                <Label x:Name="lblHumidity" FontSize="Subtitle" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="Description: " FontSize="Subtitle" />
+                                <Label x:Name="lblDescription" FontSize="Subtitle" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="Wind Speed: " FontSize="Subtitle" />
+                                <Label x:Name="lblWindSpeed" FontSize="Subtitle" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="Cloudiness: " FontSize="Subtitle" />
+                                <Label x:Name="lblCloudiness" FontSize="Subtitle" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label Text="Pressure: " FontSize="Subtitle" />
+                                <Label x:Name="lblPressure" FontSize="Subtitle" />
+                            </StackLayout>
+
+                            <Image x:Name="imgWeather" HorizontalOptions="Center" Margin="0,20,0,20" HeightRequest="100" WidthRequest="100" />
+
+                            <!-- Button for saving data -->
+                            <Button Text="Save" Clicked="OnSaveButtonClicked" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame BackgroundColor="DodgerBlue" CornerRadius="10">
+                        <StackLayout Padding="20">
+                            <Label Text="5-Day Forecast" FontSize="Title" HorizontalOptions="Center" Margin="0,0,0,20" />
+
+                            <!-- ScrollView for forecast -->
+                            <ScrollView Orientation="Horizontal" HorizontalOptions="CenterAndExpand" HorizontalScrollBarVisibility="Never">
+                                <StackLayout x:Name="stkForecast" Orientation="Horizontal" Padding="10">
+                                    <!-- Forecast items will be added here -->
+                                </StackLayout>
+                            </ScrollView>
+                        </StackLayout>
+                    </Frame>
                 </StackLayout>
-
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Temperature: " FontSize="Subtitle" />
-                    <Label x:Name="lblTemperature" FontSize="Subtitle" />
-                </StackLayout>
-
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Humidity: " FontSize="Subtitle" />
-                    <Label x:Name="lblHumidity" FontSize="Subtitle" />
-                </StackLayout>
-
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Description: " FontSize="Subtitle" />
-                    <Label x:Name="lblDescription" FontSize="Subtitle" />
-                </StackLayout>
-
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Wind Speed: " FontSize="Subtitle" />
-                    <Label x:Name="lblWindSpeed" FontSize="Subtitle" />
-                </StackLayout>
-
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Cloudiness: " FontSize="Subtitle" />
-                    <Label x:Name="lblCloudiness" FontSize="Subtitle" />
-                </StackLayout>
-
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Pressure: " FontSize="Subtitle" />
-                    <Label x:Name="lblPressure" FontSize="Subtitle" />
-                </StackLayout>
-
-                <Image x:Name="imgWeather" HorizontalOptions="Center" Margin="0,20,0,20" />
-
-                <Label Text="5-Day Forecast" FontSize="Title" HorizontalOptions="Center" Margin="0,0,0,20" />
-
-                <!-- ScrollView for forecast -->
-                <ScrollView Orientation="Horizontal" HorizontalOptions="CenterAndExpand" HorizontalScrollBarVisibility="Never">
-                    <StackLayout x:Name="stkForecast" Orientation="Horizontal" Padding="10">
-                        <!-- Forecast items will be added here -->
-                    </StackLayout>
-                </ScrollView>
-
-                <!-- Button for saving data -->
-                <Button Text="Save" Clicked="OnSaveButtonClicked" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
-
-            </StackLayout>
-        </ScrollView>
+            </ScrollView>
+            
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
