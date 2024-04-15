@@ -40,11 +40,11 @@ namespace ProjectWeatherApp
             {
                 var authService = new AuthenticationService();
 
-                // Attempt to sign up the user
+              
                 var authToken = await authService.Signup(email, password);
 
-                // Save user data to the Realtime Database
-                await SaveUserDataToDatabase(email); // You can add more user data here
+            
+                await SaveUserDataToDatabase(email);
 
                 await DisplayAlert("Signup Success", "Your account has been created", "OK");
                 await Navigation.PopAsync();
@@ -62,23 +62,23 @@ namespace ProjectWeatherApp
                 var userData = new
                 {
                     email,
-                    // Add any additional user data you want to save
+                   
                 };
 
-                // Create a new entry in the 'users' node with UID as the key
+              
                 await firebaseClient.Child("users").Child(AuthenticationService.CurrentUserUid).PutAsync(userData);
                 Console.WriteLine("User data saved to database.");
             }
             catch (Exception ex)
             {
-                // Handle database save errors
+                
                 Console.WriteLine($"Failed to save user data: {ex.Message}");
             }
         }
 
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            // Navigate back to the login page
+           
             await Navigation.PopAsync();
         }
 

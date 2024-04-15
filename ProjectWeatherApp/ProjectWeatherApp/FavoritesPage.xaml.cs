@@ -21,10 +21,9 @@ namespace ProjectWeatherApp
         {
             InitializeComponent();
 
-            // Initialize FirebaseClient with your Firebase Realtime Database URL
+           
             firebaseClient = new FirebaseClient("https://xamarin-weatherapp-default-rtdb.firebaseio.com");
 
-            // Load the list of cities from the database when the page is created
             LoadCities();
         }
 
@@ -32,7 +31,7 @@ namespace ProjectWeatherApp
         {
             base.OnAppearing();
 
-            // Load the list of cities from the database when the page appears
+         
             LoadCities();
         }
 
@@ -40,25 +39,25 @@ namespace ProjectWeatherApp
         {
             try
             {
-                // Get the current user's UID from the AuthenticationService
+             
                 string currentUserUid = AuthenticationService.CurrentUserUid;
 
-                // If the user is logged in
+          
                 if (!string.IsNullOrEmpty(currentUserUid))
                 {
-                    // Create a FirebaseClient instance with your Firebase Realtime Database URL
+                 
                     var firebaseClient = new FirebaseClient("https://xamarin-weatherapp-default-rtdb.firebaseio.com");
 
-                    // Create a FirebaseObject reference to the "favorites" node under the current user's UID
+                   
                     var favoritesNode = firebaseClient.Child("users").Child(currentUserUid).Child("favorites");
 
-                    // Retrieve the list of cities saved under the "favorites" node
+                  
                     var citiesSnapshot = await favoritesNode.OnceSingleAsync<Dictionary<string, Dictionary<string, object>>>();
 
-                    // Extract city names from the list of cities
+            
                     var cityNames = citiesSnapshot.Values.Select(city => (string)city["Name"]).ToList();
 
-                    // Bind the list of city names to the ListView
+            
                     citiesListView.ItemsSource = cityNames;
                 }
                 else

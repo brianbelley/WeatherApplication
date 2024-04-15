@@ -33,14 +33,14 @@ namespace ProjectWeatherApp
             var authToken = await authService.Login(email, password);
             if (!string.IsNullOrEmpty(authToken))
             {
-                // Navigate to HomePage or perform other actions
+              
                 await Navigation.PushAsync(new TabbedWeatherPage());
             }
         }
 
         async void OnSignupButtonClicked(object sender, EventArgs e)
         {
-            // Navigate to the signup page
+           
             await Navigation.PushAsync(new SignupPage());
         }
     }
